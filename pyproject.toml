@@ -1,0 +1,16 @@
+[project]
+name = "hexlet-code"
+version = "0.1.0"
+description = "Example application"
+authors = [
+    {name = "MLK PRODUCTION", email = "mlk18crypto@gmail.com"},
+]
+requires-python = "<4.0,>=3.12"
+readme = "README.md"
+packages = ["gendiff"]
+dependencies = [
+    "pyyaml>=6.0.0",
+    "flask>=3.1.0",
+    "gunicorn>=23.0.0",
+    "python-dotenv>=1.0.1"
+]
