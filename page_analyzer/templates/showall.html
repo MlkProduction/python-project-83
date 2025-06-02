@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Example application</title>
+  </head>
+  <body>
+    <a href="{{ url_for('urls_post') }}">Links</a>
+
+    <div>
+      <ul>
+          {% for item in urls %}
+          <li>{{ item.name }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>
