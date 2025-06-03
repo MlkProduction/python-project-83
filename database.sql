@@ -1,4 +1,3 @@
-DROP TABLE urls;
 
 CREATE TABLE urls (
     id SERIAL PRIMARY KEY,
@@ -8,7 +7,7 @@ CREATE TABLE urls (
 
 CREATE TABLE url_checks (
     id SERIAL PRIMARY KEY,
-    url_id KEY,
+    url_id INTEGER REFERENCES urls(id) ON DELETE CASCADE,
     status_code INT,
     h1 TEXT,
     title TEXT,

@@ -26,7 +26,7 @@
 
   <main class="flex-grow-1">
     <div class="container-lg mt-3">
-      <h1>{{check.name}}</h1>
+      <h1>{{url_check.name}}</h1>
 
     
   <div class="table-responsive">
@@ -34,15 +34,15 @@
       <tbody>
         <tr>
           <td>ID</td>
-          <td>{{check.id}}</td>
+          <td>{{url_check.id}}</td>
         </tr>
         <tr>
           <td>Имя</td>
-          <td>{{check.name}}</td>
+          <td>{{url_check.name}}</td>
         </tr>
         <tr>
           <td>Дата создания</td>
-          <td>{{ check.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+          <td>{{url_check.created_at}}</td>
         </tr>
       </tbody>
     </table>
@@ -68,12 +68,12 @@
       <tbody>
     
     <tr>
-        <td>{{ check.id }}</td>
+        <td>{{check_data.url_id}}</td>
+        <td>{{ check_data.status_code }}</td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td>{{ check.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        <td>{{ check_data.created_at }}</td>
     </tr>
     
     </tbody>
