@@ -6,12 +6,23 @@
   <body>
     <a href="{{ url_for('urls_post') }}">Links</a>
 
-    <div>
-      <ul>
-          {% for item in urls %}
-          <li>{{ item.name }}</li>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>URL</th>
+          <th>Дата создания</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in urls %}
+        <tr>
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.created_at }}</td>
+        </tr>
         {% endfor %}
-      </ul>
-    </div>
+      </tbody>
+    </table>
   </body>
 </html>

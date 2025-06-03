@@ -42,15 +42,14 @@ class UrlsRepository:
     #         )
     #     self.conn.commit()
 
-    def create(self, urls):
+    def create(self, url):
         with self.conn.cursor() as cur:
             cur.execute(
-                "INSERT INTO urls (name, created_at) VALUES (%s, %s) RETURNING id",
-                (urls["url"], urls["created_at"]),
-            )
-            id = cur.fetchone()[0]
-            urls["id"] = id
-        self.conn.commit()
+                "INSERT INTO urls (name, created_at) VALUES (%s, %s) RETURNING id;",
+                (url['url'], url['created_at']))
+            url_id = cur.fetchone()[0]
+            self.conn.commit()
+            return url_id
         
     def find(self, id):
         with self.conn.cursor(cursor_factory=DictCursor) as cur:

@@ -1,4 +1,6 @@
 import os
+from crypt import methods
+
 import psycopg2
 import validators
 
@@ -35,10 +37,10 @@ def urls_post():
 
     if not errors:
         data["created_at"] = datetime.now()
-        url = data
-        repo.create(url)
+        url_id = repo.create(data)
+        
         flash('Urls has been checked', 'success')
-        return redirect(url_for('urls_post'))
+        return redirect(url_for('urls_checks', id=url_id))
     else:
         flash(errors)
 
@@ -58,6 +60,14 @@ def urls_show():
     if all_urls is None:
         abort(404)
     return render_template("showall.html", urls=all_urls)
+
+@app.route("/urls/<int:id>/checks", methods=['POST', 'GET'])
+def urls_checks(id):
+    urls_check = repo.find(id)
+    if urls_check is None:
+        abort(404)
+    return render_template("checks.html", check=urls_check)
+
 
 
 if __name__ == "__main__":
