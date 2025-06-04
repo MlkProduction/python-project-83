@@ -1,12 +1,16 @@
+import validators
+
+import validators
 def validate(urls):
     errors = {}
-    url = urls.get('url', '')
+    urls = urls.get('url', '')
 
-    if not (url.startswith("https://") and url.endswith(".com/")):
+    if not validators.url(urls):
         errors = "Попробуйте начать с 'https://' и закончить на '.com/'"
 
-    if len(url) > 255:
-        errors = "Чувак(иха), это слишком длинно"
+    if len(urls) > 255:
+        errors = "Чувак(иха), это слишком длинно, напиши сайт нормально, вот так: начни с 'https://' 'тут тельце' и закончи на '.com/', например https://google.com/"
+        
 
     return errors
 
