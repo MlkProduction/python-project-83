@@ -7,6 +7,7 @@ from flask import Flask, render_template, request, flash, url_for, redirect, abo
 from dotenv import load_dotenv
 from datetime import datetime
 
+
 from page_analyzer.repository import UrlsRepository
 from page_analyzer.validator import validate
 
@@ -25,12 +26,12 @@ def urls_post():
     if request.method == "POST":
         data = request.form.to_dict()
         errors = validate(data)
-        url_name = data.get('url')
-        existing_url = repo.find_url(url_name)
+        # url_name = data.get('url')
+        # existing_url = repo.find_url(url_name)
 
-        if existing_url:
-            flash('Этот сайт уже проверяли', 'danger')
-            return redirect(url_for('urls_show', errors={}))
+        # if existing_url:
+        #     flash('Этот сайт уже проверяли', 'danger')
+        #     return redirect(url_for('urls_show', errors={}))
         if not errors:
             data["created_at"] = datetime.now()
             url_id = repo.create(data)
