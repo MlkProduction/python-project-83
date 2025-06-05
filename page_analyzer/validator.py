@@ -1,6 +1,4 @@
 import validators
-
-import validators
 def validate(urls):
     errors = {}
     urls = urls.get('url', '')
