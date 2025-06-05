@@ -7,8 +7,8 @@ from flask import Flask, render_template, request, flash, url_for, redirect, abo
 from dotenv import load_dotenv
 from datetime import datetime
 
-from repository import UrlsRepository
-from validator import validate
+from page_analyzer.repository import UrlsRepository
+from page_analyzer.validator import validate
 
 load_dotenv()
 
