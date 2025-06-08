@@ -8,17 +8,18 @@ from dotenv import load_dotenv
 from datetime import datetime
 
 
-from page_analyzer.repository import UrlsRepository
-from page_analyzer.validator import validate
+from repository import UrlsRepository
+from validator import validate
 
 load_dotenv()
 
 app = Flask(__name__)
 
-DATABASE_URL = os.getenv('DATABASE_URL')
-conn = psycopg2.connect(DATABASE_URL)
-repo = UrlsRepository(conn)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['DATABASE_URL'] = os.getenv('DATABASE_URL')
+
+repo = UrlsRepository(app.config['DATABASE_URL'])
+
 
 
 @app.route("/", methods=["GET", "POST"])
