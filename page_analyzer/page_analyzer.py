@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 from datetime import datetime
 
 
-from page_analyzer.repository import UrlsRepository
-from page_analyzer.validator import validate
+from repository import UrlsRepository
+from validator import validate
 
 load_dotenv()
 
@@ -66,12 +66,15 @@ def urls_checks(id):
     url_check = repo.find(id) #
     if url_check is None: #проверяем есть или нет такой id
         abort(404)
-
-    response = requests.get(url_check['name'], timeout=5) #делаем запрос 
-    response.raise_for_status() #запрос
-    status_code = response.status_code #получаем статус кода
+        
+    try:
+        r = requests.get(url_check['name'], timeout=10) #делаем запрос 
+    except requests.exceptions.RequestException:
+        flash('Произошла ошибка при проверке', 'alert-danger')
+        return redirect(url_for('urls_show', id=id))
     
-    soup = BeautifulSoup(response.text, 'html.parser')
+    status_code = r.status_code
+    soup = BeautifulSoup(r.text, 'html.parser')
     h1 = soup.h1.text.strip() if soup.h1 else ''
     title = soup.title.text.strip() if soup.title else ''
     desc = soup.find('meta', attrs={'name': 'description'})
