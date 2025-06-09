@@ -31,12 +31,12 @@ def urls_post():
         existing_url = repo.find_url(url_name)
 
         if existing_url:
-            flash('Этот сайт уже проверяли', 'danger')
+            flash('Страница уже существует', 'danger')
             return redirect(url_for('urls_post', errors={}))
         if not errors:
             data["created_at"] = datetime.now()
             url_id = repo.create(data)
-            flash('URL успешно добавлен', 'success')
+            flash('Страница успешно добавлена', 'success')
             return redirect(url_for('urls_showid', id=url_id))
 
         flash(errors, 'danger')

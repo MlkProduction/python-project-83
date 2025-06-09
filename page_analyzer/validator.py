@@ -4,10 +4,10 @@ def validate(urls):
     urls = urls.get('url', '')
 
     if not validators.url(urls):
-        errors = "Попробуйте начать с 'https://' и закончить на '.com/'"
+        errors = "Некорректный URL"
 
     if len(urls) > 255:
-        errors = "Чувак(иха), это слишком длинно, напиши сайт нормально, вот так: начни с 'https://' 'тут тельце' и закончи на '.com/', например https://google.com/"
+        errors = "Некорректный URL"
         
 
     return errors
