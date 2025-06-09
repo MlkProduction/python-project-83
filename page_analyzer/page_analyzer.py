@@ -27,12 +27,12 @@ def urls_post():
     if request.method == "POST":
         data = request.form.to_dict()
         errors = validate(data)
-        # url_name = data.get('url')
-        # existing_url = repo.find_url(url_name)
+        url_name = data.get('url')
+        existing_url = repo.find_url(url_name)
 
-        # if existing_url:
-        #     flash('Этот сайт уже проверяли', 'danger')
-        #     return redirect(url_for('urls_show', errors={}))
+        if existing_url:
+            flash('Этот сайт уже проверяли', 'danger')
+            return redirect(url_for('urls_post', errors={}))
         if not errors:
             data["created_at"] = datetime.now()
             url_id = repo.create(data)
