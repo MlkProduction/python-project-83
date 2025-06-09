@@ -32,15 +32,16 @@ def urls_post():
 
         if existing_url:
             flash('Страница уже существует', 'danger')
-            return redirect(url_for('urls_post', errors={}))
+            return redirect(url_for('urls_showid', id=existing_url['id']))
         if not errors:
             data["created_at"] = datetime.now()
             url_id = repo.create(data)
             flash('Страница успешно добавлена', 'success')
             return redirect(url_for('urls_showid', id=url_id))
 
-        flash(errors, 'danger')
-        return render_template("index.html", url=data, errors=errors), 422
+        if errors:
+            flash(errors['urls'], 'danger')  # Только строка! А не весь словарь!
+            return render_template("index.html", url=data, errors=errors), 422
 
 
     return render_template("index.html", url={}, errors={})
