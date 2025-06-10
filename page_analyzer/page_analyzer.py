@@ -10,10 +10,10 @@ from dotenv import load_dotenv
 from datetime import datetime
 
 
-from page_analyzer.repository import UrlsRepository
-from page_analyzer.validator import validate
-# from repository import UrlsRepository
-# from validator import validate
+# from page_analyzer.repository import UrlsRepository
+# from page_analyzer.validator import validate
+from repository import UrlsRepository
+from validator import validate
 
 load_dotenv()
 
@@ -90,8 +90,8 @@ def urls_checks(id):
     try:
         r = requests.get(url_check['name'], timeout=10) #делаем запрос 
     except requests.exceptions.RequestException:
-        flash('Произошла ошибка при проверке', 'alert-danger')
-        return redirect(url_for('urls_show', id=id))
+        flash('Произошла ошибка при проверке', 'danger')
+        return redirect(url_for('urls_showid', id=id))
     
     status_code = r.status_code
     soup = BeautifulSoup(r.text, 'html.parser')
