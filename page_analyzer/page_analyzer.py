@@ -58,9 +58,8 @@ def urls_post():
 
 
         if errors:
-            flash(errors['urls'], 'danger')  
+            flash(errors, 'danger')  
             return render_template("index.html", url=data, errors=errors), 422
-
 
     return render_template("index.html", url={}, errors={})
 

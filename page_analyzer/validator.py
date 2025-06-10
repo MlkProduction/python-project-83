@@ -1,13 +1,13 @@
 import validators
 
 def validate(data):
-    errors = {}
+    errors = ''
     url = data.get('url', '').strip()
 
     if not validators.url(url):
-        errors['url'] = 'Некорректный URL'
+        errors = 'Некорректный URL'
 
     if len(url) > 255:
-        errors['url'] = 'URL слишком длинный (максимум 255 символов)'
+        errors = 'URL слишком длинный (максимум 255 символов)'
 
     return errors
