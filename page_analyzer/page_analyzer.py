@@ -12,6 +12,8 @@ from datetime import datetime
 
 from page_analyzer.repository import UrlsRepository
 from page_analyzer.validator import validate
+# from repository import UrlsRepository
+# from validator import validate
 
 load_dotenv()
 
