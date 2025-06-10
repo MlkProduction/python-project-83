@@ -1,4 +1,6 @@
 import os
+from urllib.parse import urlparse
+
 import requests
 import psycopg2
 
@@ -21,6 +23,12 @@ app.config['DATABASE_URL'] = os.getenv('DATABASE_URL')
 repo = UrlsRepository(app.config['DATABASE_URL'])
 
 
+def normalize_url(url):
+    parsed = urlparse(url)
+    scheme = parsed.scheme.lower()
+    netloc = parsed.netloc.lower()
+    return f"{scheme}://{netloc}"
+
 
 @app.route("/", methods=["GET", "POST"])
 def urls_post():
@@ -28,19 +36,29 @@ def urls_post():
         data = request.form.to_dict()
         errors = validate(data)
         url_name = data.get('url')
+        urls = repo.get_content()
         existing_url = repo.find_url(url_name)
-
-        if existing_url:
-            flash('Страница уже существует', 'danger')
-            return redirect(url_for('urls_showid', id=existing_url['id']))
-        if not errors:
+        # normal_url = normalize_url(existing_url['name'])
+        
+        all_url = []
+        for url in urls:
+            all_url.append(url['name'])
+            
+        data['url'] = normalize_url(data['url'])
+        if data['url'] in all_url:
+                flash('Страница уже существует', 'danger')
+                id = repo.find_url(data['url'])['id']
+                return redirect(url_for('urls_showid', id=id))
+        
+        if not existing_url and not errors:
             data["created_at"] = datetime.now()
             url_id = repo.create(data)
             flash('Страница успешно добавлена', 'success')
             return redirect(url_for('urls_showid', id=url_id))
 
+
         if errors:
-            flash(errors['urls'], 'danger')  # Только строка! А не весь словарь!
+            flash(errors['urls'], 'danger')  
             return render_template("index.html", url=data, errors=errors), 422
 
 

@@ -23,6 +23,11 @@ class UrlsRepository:
                 url['id'] = url_id
             conn.commit()
             return url_id
+    def get_content(self):
+        with self.get_connection() as conn:
+            with conn.cursor(cursor_factory=DictCursor) as cur:
+                cur.execute("SELECT * FROM urls ORDER BY id DESC")
+                return cur.fetchall()
 
     def find_url(self, name):
         with self.get_connection() as conn:
