@@ -32,7 +32,12 @@ def normalize_url(url):
     return f"{scheme}://{netloc}"
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route('/')
+def index():
+    # messages = get_flashed_messages(with_categories=True)
+    # return render_template('index.html', messages=messages, url='')
+    return render_template('index.html', url='')
+@app.route("/urls", methods=["GET", "POST"])
 def urls_post():
     if request.method == "POST":
         data = request.form.to_dict()
