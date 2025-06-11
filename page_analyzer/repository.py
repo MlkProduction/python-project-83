@@ -2,11 +2,15 @@ import psycopg2
 from psycopg2.extras import DictCursor
 
 class UrlsRepository:
-    def __init__(self, dsn):
-        self.dsn = dsn
+    def __init__(self, db_url):
+        self.db_url = db_url
 
     def get_connection(self):
-        return psycopg2.connect(self.dsn)
+        try:
+            return psycopg2.connect(self.db_url)
+        except psycopg2.OperationalError as e:
+            print(f"Ошибка подключения к базе данных: {e}")
+            raise
 
     def create(self, url):
         with self.get_connection() as conn:
