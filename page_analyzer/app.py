@@ -10,10 +10,10 @@ from dotenv import load_dotenv
 from datetime import datetime
 
 
-from page_analyzer.repository import UrlsRepository
-from page_analyzer.validator import validate
-# from repository import UrlsRepository
-# from validator import validate
+# from page_analyzer.repository import UrlsRepository
+# from page_analyzer.validator import validate
+from repository import UrlsRepository
+from validator import validate
 
 load_dotenv()
 
@@ -76,7 +76,7 @@ def urls_showid(id):
     if urls is None:
         abort(404)
     checks = repo.get_checks(id)
-    return render_template("show.html", urls=urls, checks=checks)
+    return render_template("urls.html", urls=urls, checks=checks)
 
 
 @app.route("/urls")
