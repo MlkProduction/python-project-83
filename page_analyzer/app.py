@@ -115,7 +115,8 @@ def urls_checks(id):
     'created_at': datetime.now()
     }
     repo.save_checks(check_data)
-   
+
+    flash('Проверка успешно завершена', 'success')  
     return redirect(url_for('urls_showid', id=id))
 
 
