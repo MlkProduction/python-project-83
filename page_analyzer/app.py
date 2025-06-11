@@ -37,36 +37,36 @@ def index():
     # messages = get_flashed_messages(with_categories=True)
     # return render_template('index.html', messages=messages, url='')
     return render_template('index.html', url='')
-@app.route("/urls", methods=["GET", "POST"])
+@app.route("/urls", methods=["POST"])
 def urls_post():
-    if request.method == "POST":
-        data = request.form.to_dict()
-        errors = validate(data)
-        url_name = data.get('url')
-        urls = repo.get_content()
-        existing_url = repo.find_url(url_name)
-        # normal_url = normalize_url(existing_url['name'])
+   
+    data = request.form.to_dict()
+    errors = validate(data)
+    url_name = data.get('url')
+    urls = repo.get_content()
+    existing_url = repo.find_url(url_name)
+    # normal_url = normalize_url(existing_url['name'])
+    
+    all_url = []
+    for url in urls:
+        all_url.append(url['name'])
         
-        all_url = []
-        for url in urls:
-            all_url.append(url['name'])
-            
-        data['url'] = normalize_url(data['url'])
-        if data['url'] in all_url:
-                flash('Страница уже существует', 'danger')
-                id = repo.find_url(data['url'])['id']
-                return redirect(url_for('urls_showid', id=id))
-        
-        if not existing_url and not errors:
-            data["created_at"] = datetime.now()
-            url_id = repo.create(data)
-            flash('Страница успешно добавлена', 'success')
-            return redirect(url_for('urls_showid', id=url_id))
+    data['url'] = normalize_url(data['url'])
+    if data['url'] in all_url:
+            flash('Страница уже существует', 'danger')
+            id = repo.find_url(data['url'])['id']
+            return redirect(url_for('urls_showid', id=id))
+    
+    if not existing_url and not errors:
+        data["created_at"] = datetime.now()
+        url_id = repo.create(data)
+        flash('Страница успешно добавлена', 'success')
+        return redirect(url_for('urls_showid', id=url_id))
 
 
-        if errors:
-            flash(errors, 'danger')  
-            return render_template("index.html", url=data, errors=errors), 422
+    if errors:
+        flash(errors, 'danger')  
+        return render_template("index.html", url=data, errors=errors), 422
 
     return render_template("index.html", url={}, errors={})
 
