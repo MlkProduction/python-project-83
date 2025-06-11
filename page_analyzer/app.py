@@ -5,7 +5,7 @@ import requests
 import psycopg2
 
 from bs4 import BeautifulSoup
-from flask import Flask, render_template, request, flash, url_for, redirect, abort
+from flask import Flask, render_template, request, flash, url_for, redirect, abort, get_flashed_messages
 from dotenv import load_dotenv
 from datetime import datetime
 
@@ -76,11 +76,12 @@ def urls_showid(id):
     if urls is None:
         abort(404)
     checks = repo.get_checks(id)
-    return render_template("url.html", urls=urls, checks=checks)
+    messages = get_flashed_messages(with_categories=True)
+    return render_template("url.html", urls=urls, checks=checks, messages=messages)
 
 
 @app.route("/urls")
-def urls_show():
+def urls_get():
     all_urls = repo.all()
     if all_urls is None:
         abort(404)
