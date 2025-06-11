@@ -76,7 +76,7 @@ def urls_showid(id):
     if urls is None:
         abort(404)
     checks = repo.get_checks(id)
-    return render_template("urls.html", urls=urls, checks=checks)
+    return render_template("url.html", urls=urls, checks=checks)
 
 
 @app.route("/urls")
@@ -84,7 +84,7 @@ def urls_show():
     all_urls = repo.all()
     if all_urls is None:
         abort(404)
-    return render_template("showall.html", urls=all_urls)
+    return render_template("urls.html", urls=all_urls)
 
 @app.route("/urls/<int:id>/checks", methods=['POST'])
 def urls_checks(id):
