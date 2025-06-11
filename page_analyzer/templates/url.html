@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="utf-8">
@@ -35,21 +36,6 @@
 
       <div class="table-responsive">
         <table class="table table-bordered table-hover text-nowrap" data-test="url">
-      <tbody>
-        <tr>
-          <td>ID</td>
-          <td> {{ urls.id }}</td>
-        </tr>
-        <tr>
-          <td>Имя</td>
-          <td>{{ urls.name }}</td>
-        </tr>
-        <tr>
-          <td>Дата создания</td>
-          <td>{{ urls.created_at }}</td>
-        </tr>
-      </tbody>
-    </table>
           <tbody>
             <tr>
               <td>ID</td>
@@ -68,7 +54,7 @@
       </div>
 
       <h2 class="mt-5 mb-3">Проверки</h2>
-      <form method = 'post' action="{{ url_for('urls_checks', id=urls.id) }}" >
+      <form method="post" action="{{ url_for('urls_checks', id=urls.id) }}">
         <input type="submit" class="btn btn-primary" value="Запустить проверку">
       </form>
 
@@ -85,14 +71,22 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>{{ checks.id }}</td>
-              <td>{{ checks.status_code }}</td>
-              <td>{{ checks.h1 }}</td>
-              <td>{{ checks.title }}</td>
-              <td>{{ checks.description }}</td>
-              <td>{{ checks.created_at }}</td>
-            </tr>
+            {% if checks %}
+              {% for check in checks %}
+                <tr>
+                  <td>{{ check.id }}</td>
+                  <td>{{ check.status_code }}</td>
+                  <td>{{ check.h1 }}</td>
+                  <td>{{ check.title }}</td>
+                  <td>{{ check.description }}</td>
+                  <td>{{ check.created_at }}</td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="6">Нет проверок</td>
+              </tr>
+            {% endif %}
           </tbody>
         </table>
       </div>
