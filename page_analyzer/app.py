@@ -73,8 +73,9 @@ def urls_post():
 @app.route("/urls/<int:id>")
 def urls_showid(id):
     urls = repo.find(id)
-    if urls is None:
-        abort(404)
+    # if urls is None:
+    #     abort(404)
+    
     checks = repo.get_checks(id)
     messages = get_flashed_messages(with_categories=True)
     return render_template("url.html", urls=urls, checks=checks, messages=messages)
@@ -90,13 +91,14 @@ def urls_get():
 @app.route("/urls/<int:id>/checks", methods=['POST'])
 def urls_checks(id):
     url_check = repo.find(id) #
-    if url_check is None: #проверяем есть или нет такой id
-        abort(404)
+    url = url_check['name']
+    # if url_check is None: #проверяем есть или нет такой id
+    #     abort(404)
         
     try:
-        r = requests.get(url_check['name'], timeout=10) #делаем запрос 
+        r = requests.get(url, timeout=10) #делаем запрос 
     except requests.exceptions.RequestException:
-        flash('Произошла ошибка при проверке', 'danger')
+        flash('Произошла ошибка при проверке', 'alert-danger')
         return redirect(url_for('urls_showid', id=id))
     
     status_code = r.status_code
