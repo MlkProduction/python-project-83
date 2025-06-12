@@ -102,6 +102,10 @@ def urls_checks(id):
         return redirect(url_for('urls_showid', id=id))
     
     status_code = r.status_code
+    if str(status_code)[0] in ('4', '5'):
+        flash('Произошла ошибка при проверке', 'alert-danger')
+        return redirect(url_for('urls_show', id=id))
+    
     soup = BeautifulSoup(r.text, 'html.parser')
     h1 = soup.h1.text.strip() if soup.h1 else ''
     title = soup.title.text.strip() if soup.title else ''
