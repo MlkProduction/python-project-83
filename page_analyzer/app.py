@@ -85,8 +85,6 @@ def urls_showid(id):
                            messages=messages)
 
 
-
-
 @app.route("/urls")
 def urls_get():
     all_urls = repo.all()
