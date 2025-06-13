@@ -1,6 +1,7 @@
 import psycopg2
 from psycopg2.extras import DictCursor
 
+
 class UrlsRepository:
     def __init__(self, db_url):
         self.db_url = db_url
@@ -21,12 +22,13 @@ class UrlsRepository:
                     VALUES (%s, CURRENT_DATE)
                     RETURNING id;
                     """,
-                    (url['url'],)
+                    (url["url"],),
                 )
                 url_id = cur.fetchone()[0]
-                url['id'] = url_id
+                url["id"] = url_id
             conn.commit()
             return url_id
+
     def get_content(self):
         with self.get_connection() as conn:
             with conn.cursor(cursor_factory=DictCursor) as cur:
@@ -72,13 +74,13 @@ class UrlsRepository:
                     RETURNING id;
                     """,
                     (
-                        check_data['url_id'],
-                        check_data['status_code'],
-                        check_data['h1'],
-                        check_data['title'],
-                        check_data['description'],
-                        check_data['created_at']
-                    )
+                        check_data["url_id"],
+                        check_data["status_code"],
+                        check_data["h1"],
+                        check_data["title"],
+                        check_data["description"],
+                        check_data["created_at"],
+                    ),
                 )
                 check_id = cur.fetchone()[0]
             conn.commit()
@@ -89,4 +91,4 @@ class UrlsRepository:
             with conn.cursor(cursor_factory=DictCursor) as cur:
                 cur.execute("SELECT * FROM url_checks WHERE url_id = %s", (url_id,))
                 rows = cur.fetchall()
-                return [dict(row) for row in rows] 
+                return [dict(row) for row in rows]
