@@ -61,7 +61,7 @@ class UrlsRepository:
                 rows = cur.fetchall()
                 return [dict(row) for row in rows]
 
-    def save_checks(self, url):
+    def save_checks(self, check_data):
         with self.get_connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -72,12 +72,12 @@ class UrlsRepository:
                     RETURNING id;
                     """,
                     (
-                        url['url_id'],
-                        url['status_code'],
-                        url['h1'],
-                        url['title'],
-                        url['description'],
-                        url['created_at']
+                        check_data['url_id'],
+                        check_data['status_code'],
+                        check_data['h1'],
+                        check_data['title'],
+                        check_data['description'],
+                        check_data['created_at']
                     )
                 )
                 check_id = cur.fetchone()[0]
@@ -88,5 +88,5 @@ class UrlsRepository:
         with self.get_connection() as conn:
             with conn.cursor(cursor_factory=DictCursor) as cur:
                 cur.execute("SELECT * FROM url_checks WHERE url_id = %s", (url_id,))
-                row = cur.fetchone()
-                return dict(row) if row else None
+                rows = cur.fetchall()
+                return [dict(row) for row in rows] 

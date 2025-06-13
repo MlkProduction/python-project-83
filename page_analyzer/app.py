@@ -75,9 +75,10 @@ def urls_showid(id):
     urls = repo.find(id)
     # if urls is None:
     #     abort(404)
+    # 
     
-    checks = repo.get_checks(id)
     messages = get_flashed_messages(with_categories=True)
+    checks = repo.get_checks(id)
     return render_template("url.html", urls=urls, checks=checks, messages=messages)
 
 
@@ -94,7 +95,7 @@ def urls_checks(id):
     url = url_check['name']
     # if url_check is None: #проверяем есть или нет такой id
     #     abort(404)
-        
+    #     
     try:
         r = requests.get(url, timeout=10) #делаем запрос 
     except requests.exceptions.RequestException:
@@ -108,8 +109,11 @@ def urls_checks(id):
     
     soup = BeautifulSoup(r.text, 'html.parser')
     h1 = soup.h1.text.strip() if soup.h1 else ''
+
     title = soup.title.text.strip() if soup.title else ''
+    
     desc = soup.find('meta', attrs={'name': 'description'})
+    
     description = desc['content'].strip() if desc and desc.get('content') else ''
     
     check_data = {
