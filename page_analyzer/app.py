@@ -81,7 +81,10 @@ def urls_showid(id):
     urls = repo.find(id)
     messages = get_flashed_messages(with_categories=True)
     checks = repo.get_checks(id)
-    return render_template("url.html", urls=urls, checks=checks, messages=messages)
+    return render_template("url.html", urls=urls, checks=checks, 
+                           messages=messages)
+
+
 
 
 @app.route("/urls")
@@ -115,7 +118,8 @@ def urls_checks(id):
 
     desc = soup.find("meta", attrs={"name": "description"})
 
-    description = desc["content"].strip() if desc and desc.get("content") else ""
+    description = desc["content"].strip() \
+        if desc and desc.get("content") else ""
 
     check_data = {
         "url_id": id,

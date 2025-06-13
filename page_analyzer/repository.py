@@ -89,6 +89,7 @@ class UrlsRepository:
     def get_checks(self, url_id):
         with self.get_connection() as conn:
             with conn.cursor(cursor_factory=DictCursor) as cur:
-                cur.execute("SELECT * FROM url_checks WHERE url_id = %s", (url_id,))
+                cur.execute(
+                    "SELECT * FROM url_checks WHERE url_id = %s", (url_id,))
                 rows = cur.fetchall()
                 return [dict(row) for row in rows]
