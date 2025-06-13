@@ -122,7 +122,7 @@ def urls_checks(id):
     }
     repo.save_checks(check_data)
 
-    flash('Проверка успешно завершена', 'success')  
+    flash('Страница успешно проверена', 'success')  
     return redirect(url_for('urls_showid', id=id))
 
 
