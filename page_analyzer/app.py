@@ -108,7 +108,7 @@ def urls_checks(id):
         flash("Произошла ошибка при проверке", "alert-danger")
         return redirect(url_for("urls_showid", id=id))
 
-    #перенес в parser.py
+    # перенес в parser.py
     # soup = BeautifulSoup(r.text, "html.parser")
     # h1 = soup.h1.text.strip() if soup.h1 else ""
     # 
