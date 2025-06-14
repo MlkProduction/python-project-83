@@ -18,9 +18,10 @@ from flask import (
 from dotenv import load_dotenv
 from datetime import datetime
 
-
+from page_analyzer.parser import parse_html
 from page_analyzer.repository import UrlsRepository
 from page_analyzer.validator import validate
+
 
 
 load_dotenv()
@@ -109,16 +110,18 @@ def urls_checks(id):
         flash("Произошла ошибка при проверке", "alert-danger")
         return redirect(url_for("urls_showid", id=id))
 
-    soup = BeautifulSoup(r.text, "html.parser")
-    h1 = soup.h1.text.strip() if soup.h1 else ""
+    # soup = BeautifulSoup(r.text, "html.parser")
+    # h1 = soup.h1.text.strip() if soup.h1 else ""
+    # 
+    # title = soup.title.text.strip() if soup.title else ""
+    # 
+    # desc = soup.find("meta", attrs={"name": "description"})
+    # 
+    # description = desc["content"].strip() \
+    #     if desc and desc.get("content") else ""
 
-    title = soup.title.text.strip() if soup.title else ""
-
-    desc = soup.find("meta", attrs={"name": "description"})
-
-    description = desc["content"].strip() \
-        if desc and desc.get("content") else ""
-
+    h1, title, description = parse_html(r.text)
+    
     check_data = {
         "url_id": id,
         "status_code": status_code,
@@ -127,8 +130,9 @@ def urls_checks(id):
         "description": description,
         "created_at": datetime.now(),
     }
+    
     repo.save_checks(check_data)
-
+    
     flash("Страница успешно проверена", "success")
     return redirect(url_for("urls_showid", id=id))
 
