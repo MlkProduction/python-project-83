@@ -4,7 +4,6 @@ from urllib.parse import urlparse
 import requests
 
 
-from bs4 import BeautifulSoup
 from flask import (
     Flask,
     render_template,
@@ -21,7 +20,6 @@ from datetime import datetime
 from page_analyzer.parser import parse_html
 from page_analyzer.repository import UrlsRepository
 from page_analyzer.validator import validate
-
 
 
 load_dotenv()
@@ -110,6 +108,7 @@ def urls_checks(id):
         flash("Произошла ошибка при проверке", "alert-danger")
         return redirect(url_for("urls_showid", id=id))
 
+    #перенес в parser.py
     # soup = BeautifulSoup(r.text, "html.parser")
     # h1 = soup.h1.text.strip() if soup.h1 else ""
     # 
